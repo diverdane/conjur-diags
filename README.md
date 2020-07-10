@@ -149,7 +149,6 @@ Command "conjur list variables" returns SUCCESS in 0m0.388s
 $
 ```
 
-
 ## Running Conjur Commands
 
 The `conjur_diags.sh` script can be used run Conjur CLI commands.
