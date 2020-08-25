@@ -9,6 +9,10 @@
 #
 # Required environment variables:
 #    CONJUR_URL: URL for the target Conjur master or follower.
+#
+# Optional environment variable:
+#    CONJUR_PORT: Port for the target Conjur master or follower.
+#                 Defaults to 443.
 
 source ./utils.sh
 
@@ -25,4 +29,6 @@ if [ ! -f "$cacert_file" ]; then
     echo quit | openssl s_client -showcerts -servername server -connect "$conjur_domain_name":443 > "$cacert_file"
 fi
 
-curl --cacert "$cacert_file" --fail --silent --show-error --connect-timeout 5 "$CONJUR_URL"
+CONJUR_PORT=${CONJUR_PORT:-443}
+
+curl --cacert "$cacert_file" --fail --silent --show-error --connect-timeout 5 "$CONJUR_URL:$CONJUR_PORT"

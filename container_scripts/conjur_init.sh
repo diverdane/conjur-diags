@@ -19,6 +19,7 @@ function usage {
     echo "    CONJUR_IP:      Conjur master/follower IP address. This is required if"
     echo "                    there is no DNS entry registered for the domain name"
     echo "                    portion of the CONJUR_URL."
+    echo "    CONJUR_PORT:    Conjur master/follower port. Defaults to 443."
 }
 
 # Parse command line arguments
@@ -36,6 +37,8 @@ while [ "$1" != "" ]; do
     esac
     shift
 done
+
+CONJUR_PORT=${CONJUR_PORT:-443}
 
 # Check required environmental variables
 if [ -z "$CONJUR_ACCOUNT" ]; then
@@ -64,6 +67,6 @@ if [ "$verbose_mode" = true ]; then
     echo "Writing TLS CA cert chain to /root/conjur-$CONJUR_ACCOUNT.pem)."
 fi
 
-yes yes | conjur init -u "$CONJUR_URL" -a "$CONJUR_ACCOUNT" --force=true > /dev/null
+yes yes | conjur init -u "$CONJUR_URL:$CONJUR_PORT" -a "$CONJUR_ACCOUNT" --force=true > /dev/null
 # Show that an implicit "yes" command was piped to conjur init 
 echo "yes"

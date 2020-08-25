@@ -24,8 +24,13 @@ function usage {
     echo "    CONJUR_KUBE_SVC: Kubernetes service that provides an external"
     echo "                     IP address for a Conjur server that is running"
     echo "                     in a Kubernetes cluster."
+    echo
     echo "If there is no DNS entry registered for the domain name portion of"
     echo "CONJUR_URL, then either CONJUR_IP or CONJUR_KUBE_SVC must be set."
+    echo "OPTIONAL ENVIRONMENT VARIABLE:"
+    echo "==============================:"
+    echo "    CONJUR_PORT:     Port to use for Conjur master/follower."
+    echo "                     Defaults to 443."
 }
 
 # Parse command line arguments

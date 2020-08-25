@@ -39,6 +39,11 @@ function usage {
     echo "If there is no DNS entry registered for the domain name portion of"
     echo "CONJUR_URL, then either CONJUR_IP or CONJUR_KUBE_SVC must be set."
     echo
+    echo "OPTIONAL ENVIRONMENT VARIABLE:"
+    echo "==============================:"
+    echo "    CONJUR_PORT:     Port to use for Conjur master/follower."
+    echo "                     Defaults to 443."
+    echo
     echo "EXAMPLES"
     echo "========"
     echo
@@ -64,6 +69,8 @@ function usage {
     echo "Run several basic connectivity tests:"
     echo "    $0 -c conjur_test.sh"
 }
+
+export CONJUR_PORT=${CONJUR_PORT:-443}
 
 # Parse command line arguments
 auto_login=true
@@ -170,6 +177,7 @@ docker run -it --rm \
     --env ADMIN_PASSWORD \
     --env CONJUR_ACCOUNT \
     --env CONJUR_IP \
+    --env CONJUR_PORT \
     --env CONJUR_URL \
     -v "$PWD/container_scripts:/root/scripts:ro" \
     -v "$PWD/policy:/root/policy:ro" \

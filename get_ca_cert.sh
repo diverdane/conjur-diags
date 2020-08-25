@@ -7,13 +7,14 @@ function usage {
     echo "IP address."
     echo
     echo "Usage:"
-    echo "   $0 -a|--addr <ip-address> [ -h|--help ]"
+    echo "   $0 -a|--addr <ip-address> [ -p|--port <port> ] [ -h|--help ]"
     echo
     echo "Example:"
     echo "   $0 -a 192.0.2.1"
 }
 
 # Parse command line arguments
+port=443
 while [ "$1" != "" ]; do
     case $1 in
         -a | --addr )     shift
@@ -21,6 +22,9 @@ while [ "$1" != "" ]; do
                           ;;
         -h | --help )     usage
                           exit 0
+                          ;;
+        -p | --port )     shift
+                          port=$1
                           ;;
         * )               >&2 echo "Unknown argument: ${1}"
                           usage
@@ -35,4 +39,4 @@ if [ -z "$ip_addr" ]; then
     exit 1
 fi
 
-echo | openssl s_client -connect "$ip_addr":443 2>&1
+echo | openssl s_client -connect "$ip_addr:$port" 2>&1

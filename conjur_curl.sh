@@ -25,6 +25,11 @@ function usage {
     echo "If there is no DNS entry registered for the domain name portion of"
     echo "CONJUR_URL, then either CONJUR_IP or CONJUR_KUBE_SVC must be set."
     echo
+    echo "OPTIONAL ENVIRONMENT VARIABLE:"
+    echo "==============================:"
+    echo "    CONJUR_PORT:     Port to use for Conjur master/follower."
+    echo "                     Defaults to 443."
+    echo
     echo "Example: Run curl in secure mode"
     echo
     echo "    $0"
@@ -51,8 +56,11 @@ while [ "$1" != "" ]; do
     shift
 done
 
+./show_env.sh
+
 if [ "$insecure" == true ]; then
     ./conjur_diags.sh --no-login -c "curl_insecure.sh"
 else
-    ./conjur_diags.sh --no-login -c "curl_secure.sh"
+    #./conjur_diags.sh --no-login -c "curl_secure.sh"
+    ./conjur_diags.sh -c "curl_secure.sh"
 fi
